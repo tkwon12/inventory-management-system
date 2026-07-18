@@ -7,6 +7,7 @@ const authenticateToken = require("./middleware/authMiddleware");
 const authorizeRole = require("./middleware/roleMiddleware");
 
 const productRouter = require("./routes/productRoutes");
+const customerRouter = require("./routes/customerRoutes");
 
 
 const pool = require("./db");
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/products",productRouter);
+app.use("/customers",customerRouter);
 
 app.get("/",(req,res) =>{
     res.send("Inventory Management API is running");
@@ -180,81 +182,7 @@ app.put("/orders/:id/status",authenticateToken,authorizeRole(["admin","manager"]
     }
 });
 
-app.get("/customers",authenticateToken,async(req,res)=>{
-    try{
-        const result = await pool.query(
-            `SELECT *
-            FROM customers
-            ORDER BY id`
-        );
-        res.json(result.rows);
-    }catch(error){
-        console.error(error);
-        res.status(500).json({message:"Server Error"});
-    }
-    
-});
 
-app.post("/customers",authenticateToken,async(req,res)=>{
-    try{const {name,email,phone,address} = req.body;
-    const result = await pool.query(
-        `INSERT INTO customers (name,email,phone,address)
-         VALUES ($1,$2,$3,$4)
-         RETURNING *
-        `,[name,email,phone,address]
-    );
-    res.status(201).json(result.rows[0]);
-    }catch(error){
-        console.error(error);
-        res.status(500).json({message:"Server Error"});
-    }
-});
-
-app.put("/customers/:id",async(req,res)=>{
-    const {id} = req.params;
-    
-    const {name, email, phone, address} = req.body;
-    try{
-    const result = await pool.query(
-        `UPDATE customers
-        SET name = $1,
-            email = $2,
-            phone = $3,
-            address = $4
-        WHERE id = $5
-        RETURNING *
-        `,[name,email,phone,address,id]
-    );
-        if(result.rows.length === 0){
-            return res.status(404).json({message:`${id} not found`});
-        }
-        res.json(result.rows[0]);
-    }catch(error){
-        console.error(error);
-        res.status(500).json({massage: `Server Error`});
-    }
-
-
-});
-
-app.delete("/customers/:id",async(req,res)=>{
-    const {id} = req.params;
-    try{
-        const result = await pool.query(
-            `DELETE FROM customers
-            WHERE id = $1
-            RETURNING *`,[id]
-        );
-
-        if(result.rows.length === 0){
-            return res.status(404).json({message:`${id} not found`});
-        }
-        res.json(result.rows[0]);
-    }catch(error){
-        console.error(error);
-        res.status(500).json({message:"Server Errror"});
-    }
-});
 
 app.post("/auth/register",async(req,res)=>{
     try{

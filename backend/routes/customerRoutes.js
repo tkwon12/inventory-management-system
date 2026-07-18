@@ -1,40 +1,37 @@
 const express = require("express");
+
 const authenticateToken = require("../middleware/authMiddleware");
 const authorizeRole = require("../middleware/roleMiddleware");
-const { getProducts,createProduct,updateProduct,deleteProduct } = require("../controllers/productController");
+
+const { getCustumers, createCustomer, updateCustomer, deleteCustomer } = require("../controllers/customerController");
 
 const router = express.Router();
-
-
 
 router.get(
     "/",
     authenticateToken,
-    getProducts
+    getCustumers
+
 );
 
 router.post(
     "/",
     authenticateToken,
-    authorizeRole(["admin","manager"]),
-    createProduct
-
+    createCustomer
 );
 
 router.put(
     "/:id",
     authenticateToken,
     authorizeRole(["admin","manager"]),
-    updateProduct
-    
-);
+    updateCustomer
+)
 
 router.delete(
     "/:id",
     authenticateToken,
     authorizeRole(["admin"]),
-    deleteProduct
-
-);
+    deleteCustomer
+)
 
 module.exports = router;
