@@ -111,6 +111,7 @@ const getOrderById = async(req,res) => {
                 c.name AS customer_name,
                 u.name AS employee_name,
                 p.name AS product_name,
+                p.product_code AS product_code,
                 oi.quantity,
                 oi.unit_price,
                 o.order_date,

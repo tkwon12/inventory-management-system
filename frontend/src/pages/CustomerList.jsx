@@ -216,27 +216,52 @@ return(
                 <input id ="address" type ="text" value={address}
                 onChange={(event)=>{setAddress(event.target.value)}}/>
             </div>
-            <button type ="submit" disabled = {loading} >Add Customer</button>
+            <button type ="submit" className="primary-button" disabled = {loading} >Add Customer</button>
             </form>
 
             <h2>Customers</h2>
             <button type="button" onClick={getCustomers} 
             disabled = {loading}>{loading? "Loading...":"Get Customers"}</button>
             {error&&<p>{error}</p>}
-            {customers.map((customer)=>(
-                <div key = {customer.id}>
-                    <p>name:{customer.name}</p>
-                    <p>Email:{customer.email}</p>
-                    <p>Phone:{customer.phone}</p>
-                    <p>Address:{customer.address}</p>
-                    <button type = "button" disabled={loading} 
+            {customers.length===0?(<p>No customers found</p>):(
+                <table>
+                    <thead>
+                    <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                       Email 
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {customers.map((customer)=>(
+                        <tr key = {customer.id}>
+                    <td>{customer.name}</td>
+                    <td>{customer.email}</td>
+                    <td>{customer.phone}</td>
+                    <td>{customer.address}</td>
+                    <td><button type = "button" disabled={loading} 
                     onClick={()=>startEditing(customer)}>Edit</button>
-                    <button type = "button" disabled={loading} 
+                    <button type = "button" className="danger-button" disabled={loading} 
                     onClick={()=>deleteCustomer(customer.id)}>Delete</button>
-                </div>
-            
-            ))}
+                    </td>
+                       </tr>))}
+                    </tbody>
 
+                </table>
+            )}
+           
             {editingCustomerId !== null &&(
                 <form onSubmit={updateCustomer}>
                     <h3>Edit Customer</h3>
@@ -261,8 +286,9 @@ return(
                         onChange={(event)=>{setEditAddress(event.target.value)}}/>
                     </div>
 
-                <button type="submit" disabled={loading}>Update Customer</button>
-                <button type="button" disabled={loading} onClick={()=>setEditingCustomerId(null)}>
+                <button type="submit" className="primary-button" disabled={loading}>Update Customer</button>
+                <button type="button" disabled={loading} className="secondary-button" 
+                onClick={()=>setEditingCustomerId(null)}>
                     Cancel
                 </button>
                 </form>

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import {Routes,Route} from "react-router-dom";
+
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";
 import CustomerList  from './pages/CustomerList';
@@ -20,16 +22,24 @@ function App() {
     {isLoggedIn? (
       <>
       <nav>
-        <button type = "button" onClick={()=>setCurrentPage("products")}>Products</button>
-        <button type = "button" onClick={()=>setCurrentPage("customers")}>Customers</button>
-        <button type = "button" onClick = {()=>setCurrentPage("orders")}>Orders</button>
-        <button type = "button" onClick={handleLogout}>Log Out</button>
+        <button type = "button" className=
+        {currentPage==="products"?"primary-button":"secondary-button"} 
+        onClick={()=>setCurrentPage("products")}>Products</button>
+        <button type = "button" className=
+        {currentPage==="customers"?"primary-button":"secondary-button"} 
+        onClick={()=>setCurrentPage("customers")}>Customers</button>
+        <button type = "button" className=
+        {currentPage==="orders"?"primary-button":"secondary-button"} 
+        onClick = {()=>setCurrentPage("orders")}>Orders</button>
+        <button type = "button" className="danger-button"
+        onClick={handleLogout}>Log Out</button>
         
       </nav>
-      {currentPage === "products" && (<ProductList onLogout = {handleLogout}/>)}
-      {currentPage ==="customers" && (<CustomerList onLogout={handleLogout}/>)}
-      {currentPage === "orders" && (<OrderList onLogout = {handleLogout}/>)}</>)
-      
+      <Routes>
+        <Route path = "/products" element = {<ProductList onLogout={handleLogout}/>}/>
+        <Route path = "/customers" element = {<CustomerList onLogout={handleLogout}/>}/>
+        <Route path = "/orders" element = {<OrderList onLogout={handleLogout}/>}/>
+      </Routes>
       :
       (<Login onLogin = {handleLogin}/>)
     }</>

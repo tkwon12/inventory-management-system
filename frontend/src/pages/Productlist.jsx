@@ -230,7 +230,7 @@ async function deleteProduct(productId){
                 onChange={(event)=>{setStockQuantity(event.target.value)}}/>
         
             </div>
-            <button type = "submit" disabled = {loading}>Add Product</button>
+            <button type = "submit" className="primary-button" disabled = {loading}>Add Product</button>
         </form>
 
             <h2>Products</h2>
@@ -241,17 +241,43 @@ async function deleteProduct(productId){
             </button>
             {error&&<p>{error}</p>}
 
-            {products.map((product)=>(
-                <div key = {product.id}>
-                    <p>Product Code: {product.product_code}</p>
-                    <p>Name: {product.name}</p>
-                    <p>Price: {product.price}</p>
-                    <p>Stock: {product.stock_quantity}</p>
 
-                <button type = "button" onClick={()=>startEditing(product)}>Edit</button>
-                <button type = "button" onClick={()=>deleteProduct(product.id)} disabled = {loading}>Delete</button>
-                </div>
-            ))}
+            {products.length === 0? (<p>No product found</p>):(
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Product Code
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Stock
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map((product)=>(
+                    <tr key = {product.id}>
+                    <td>{product.product_code}</td>
+                    <td>{product.name}</td>
+                    <td>${Number(product.price).toFixed(2)}</td>
+                    <td>{product.stock_quantity}</td>
+                    <td> <button type = "button" onClick={()=>startEditing(product)}>Edit</button>
+                        <button type = "button" className="danger-button" onClick={()=>deleteProduct(product.id)} 
+                        disabled = {loading}>Delete</button></td>
+                    </tr>))}
+                    </tbody>
+                </table>
+            )}
+
 
             {editingProductId !== null && (
                 <form onSubmit = {updateProduct}>
@@ -291,8 +317,8 @@ async function deleteProduct(productId){
                         onChange={(event)=>{setEditStockQuantity(event.target.value)}}/>
                     </div>
 
-                    <button type = "submit" disabled={loading} > Update Product</button>
-                    <button type = "button" onClick={()=>setEditingProductId(null)}>
+                    <button type = "submit" className="primary-button" disabled={loading} > Update Product</button>
+                    <button type = "button" className="secondary-button" onClick={()=>setEditingProductId(null)}>
                         Cancel
                     </button>
 

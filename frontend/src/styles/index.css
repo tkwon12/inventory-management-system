@@ -1,15 +1,160 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f6f8;
+    color: #222;
 }
 
-button,
+main {
+    padding: 24px;
+    max-width: 1200px;
+    margin:0 auto;
+}
+
+nav {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top:0;
+}
+
+nav button {
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+section {
+    margin-top: 24px;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+form > div {
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
 input,
 select {
-  font: inherit;
+    width: 100%;
+    padding: 8px 10px;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
+button {
+    padding: 8px 12px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 16px;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f1f3;
+}
+
+tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin-top: 0;
+}
+
+
+button {
+    border: none;
+    border-radius: 6px;
+    background-color: #2563eb;
+    padding:8px 12px;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    filter: brightness(0.95);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.primary-button{
+  background-color: #2563eb;
+  color: white;
+}
+
+.danger-button {
+    background-color: #dc2626;
+    color: white;
+}
+
+.secondary-button {
+    background-color: #6b7280;
+    color: white;
+}
+
+.info-button{
+  background-color: #0f766e;
+  color:white;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-completed {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-cancelled {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
