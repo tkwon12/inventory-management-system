@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import {Routes,Route} from "react-router-dom";
+import {Routes,Route,NavLink,Navigate,useNavigate} from "react-router-dom";
+
+import PrivateRoute from './components/PrivateRoute';
 
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";
@@ -7,39 +9,52 @@ import CustomerList  from './pages/CustomerList';
 import OrderList from "./pages/OrderList";
 
 function App() {
+  const navigate = useNavigate();
   const [isLoggedIn,setIsLoggedIn] 
     = useState(localStorage.getItem("token") !== null);
   const [currentPage,setCurrentPage] = useState("products");
   function handleLogin(){
     setIsLoggedIn(true);
+    useNavigate("/products");
   }
   function handleLogout(){
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    navigate("/");
   }
       return(
     <>
     {isLoggedIn? (
       <>
       <nav>
-        <button type = "button" className=
-        {currentPage==="products"?"primary-button":"secondary-button"} 
-        onClick={()=>setCurrentPage("products")}>Products</button>
-        <button type = "button" className=
-        {currentPage==="customers"?"primary-button":"secondary-button"} 
-        onClick={()=>setCurrentPage("customers")}>Customers</button>
-        <button type = "button" className=
-        {currentPage==="orders"?"primary-button":"secondary-button"} 
-        onClick = {()=>setCurrentPage("orders")}>Orders</button>
-        <button type = "button" className="danger-button"
+        <NavLink to = "/products" 
+        className={({isActive})=>isActive?"primary-button":"secondary-button"}>Products</NavLink>
+
+        <NavLink to = "/customers" 
+        className={({isActive})=>isActive?"primary-button":"secondary-button"}>Customers</NavLink>
+
+        <NavLink to = "/orders"
+        className={({isActive})=>isActive?"primary-button":"secondary-button"}>Orders</NavLink>
+
+       <button type = "button" className="danger-button"
         onClick={handleLogout}>Log Out</button>
         
       </nav>
+
       <Routes>
-        <Route path = "/products" element = {<ProductList onLogout={handleLogout}/>}/>
-        <Route path = "/customers" element = {<CustomerList onLogout={handleLogout}/>}/>
-        <Route path = "/orders" element = {<OrderList onLogout={handleLogout}/>}/>
-      </Routes>
+        <Route path ="/" element={
+        isLoggedIn
+            ? <Navigate to="/products" replace />
+            : <Login onLogin={handleLogin} />
+        }/>
+        <Route path = "/products" element = {<PrivateRoute isLoggedIn={isLoggedIn}>
+          <ProductList onLogout={handleLogout}/></PrivateRoute> }/>
+        <Route path = "/customers" element = {<PrivateRoute isLoggedIn={isLoggedIn}>
+          <CustomerList onLogout={handleLogout}/></PrivateRoute>}/>
+        <Route path = "/orders" element = {<PrivateRoute isLoggedIn={isLoggedIn}>
+        <OrderList onLogout={handleLogout}/></PrivateRoute>}/>
+        <Route path = "*" element = {<h2>404 - Page Not Found</h2>}/>
+      </Routes></>)
       :
       (<Login onLogin = {handleLogin}/>)
     }</>
