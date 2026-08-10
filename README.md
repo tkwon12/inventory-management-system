@@ -9,7 +9,7 @@ The application allows authenticated employees to manage products, customers, an
 ## Live Demo
 
 **Live Application:**  
-[Open Inventory Management System](inventory-management-system-tau-ten.vercel.app)
+[Open Inventory Management System](https://inventory-management-system-tau-ten.vercel.app/)
 
 ### Demo Account
 
