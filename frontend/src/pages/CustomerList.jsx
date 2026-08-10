@@ -1,5 +1,7 @@
 import {useEffect,useState} from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function CustomerList({onLogout}){
     const [customers,setCustomers] = useState([]);
     const [loading,setLoading] = useState(false);
@@ -16,14 +18,15 @@ function CustomerList({onLogout}){
     const [editEmail,setEditEmail] = useState("");
     const [editPhone,setEditPhone] = useState("");
     const [editAddress,setEditAddress] = useState("");
-
+    
+    
 async function getCustomers(){
     const token = localStorage.getItem("token");
 
     setLoading(true);
     setError("");
     try{
-        const response = await fetch("http://localhost:3000/customers",{
+        const response = await fetch(`${API_URL}/customers`,{
             method:"GET",
             headers:{
                 Authorization:`Bearer ${token}`,
@@ -58,7 +61,7 @@ async function createCustomer(event){
     setLoading(true);
     setError("");
     try{
-        const response = await fetch("http://localhost:3000/customers",{
+        const response = await fetch(`${API_URL}/customers`,{
             method: "POST",
             headers : {
                 "Content-type":"application/json",
@@ -115,7 +118,7 @@ async function updateCustomer(event){
     setError("");
 
     try{
-        const response = await fetch(`http://localhost:3000/customers/${editingCustomerId}`,
+        const response = await fetch(`${API_URL}/customers/${editingCustomerId}`,
             {method:"PUT",
                 headers: {
                 "Content-type":"application/json",
@@ -160,7 +163,7 @@ async function deleteCustomer(customerId){
     setLoading(true);
     setError("");
     try{
-        const response = await fetch(`http://localhost:3000/customers/${customerId}`,
+        const response = await fetch(`${API_URL}/customers/${customerId}`,
             {method:"DELETE",
                 headers:{
                     Authorization:`Bearer ${token}`

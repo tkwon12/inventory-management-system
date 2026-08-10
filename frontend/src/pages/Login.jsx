@@ -1,16 +1,19 @@
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Login({onLogin}){
    const [employeeNumber, setEmployeeNumber] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    
    
      async function handlesubmit(event){
         event.preventDefault();
         setError("");
 
         try{
-        const response = await fetch("http://localhost:3000/auth/login",{
+        const response = await fetch(`${API_URL}/auth/login`,{
             method : "POST",
             headers: {
                 "Content-Type" :"application/json"

@@ -12,10 +12,10 @@ function App() {
   const navigate = useNavigate();
   const [isLoggedIn,setIsLoggedIn] 
     = useState(localStorage.getItem("token") !== null);
-  const [currentPage,setCurrentPage] = useState("products");
+  
   function handleLogin(){
     setIsLoggedIn(true);
-    useNavigate("/products");
+    navigate("/products");
   }
   function handleLogout(){
     localStorage.removeItem("token");

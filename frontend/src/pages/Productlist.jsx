@@ -1,5 +1,6 @@
 import { useEffect,useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ProductList({onLogout}){
     const [products,setProducts] = useState([]);
@@ -17,6 +18,8 @@ function ProductList({onLogout}){
     const [editStockQuantity,setEditStockQuantity] = useState("");
     const [editProductCode,setEditProductCode] = useState("");
 
+
+
     function startEditing(product){
         setEditingProductId(product.id);
         setEditProductCode(product.product_code);
@@ -31,7 +34,7 @@ function ProductList({onLogout}){
         setError("");
 
         try{
-            const response = await fetch("http://localhost:3000/products",
+            const response = await fetch(`${API_URL}/products`,
                 {method:"GET",
                     headers:{
                         Authorization:`Bearer ${token}`,
@@ -66,7 +69,7 @@ async function createProduct(event) {
     setError("");
 
     try{
-        const response = await fetch("http://localhost:3000/products",{
+        const response = await fetch(`${API_URL}/products`,{
             method:"POST",
             headers: {
                 "Content-Type": "application/json",
@@ -113,7 +116,7 @@ async function updateProduct(event) {
     setError("");
 
     try{
-        const response = await fetch(`http://localhost:3000/products/${editingProductId}`,{
+        const response = await fetch(`${API_URL}/products/${editingProductId}`,{
             method:"PUT",
             headers:{
                 "Content-type":"application/json",
@@ -160,7 +163,7 @@ async function deleteProduct(productId){
     setError("");
 
     try{
-        const response = await fetch(`http://localhost:3000/${productId}`,{
+        const response = await fetch(`${API_URL}/${productId}`,{
             method: "DELETE",
             header: {
                 Authorization : `Bearer ${token}`,

@@ -1,5 +1,6 @@
 import {useEffect,useState} from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 function OrderList({onLogout}){
 
@@ -23,6 +24,8 @@ function OrderList({onLogout}){
   const [selectedOrder,setSelectedOrder] = useState(null);
   const [detailLoading,setDetailLoading] = useState(false);
 
+  
+
   async function getOrder(){
     const token = localStorage.getItem("token");
 
@@ -30,7 +33,7 @@ function OrderList({onLogout}){
     setError("");
 
     try{
-        const response = await fetch("http://localhost:3000/orders",{
+        const response = await fetch(`${API_URL}/orders`,{
             method: "GET",
             headers:{
                
@@ -63,7 +66,7 @@ function OrderList({onLogout}){
   async function getCustomers(){
     const token = localStorage.getItem("token");
 
-    const response = await fetch("http://localhost:3000/customers",{
+    const response = await fetch(`${API_URL}/customers`,{
         method:"GET",
         headers:{
             Authorization:`Bearer ${token}`,
@@ -77,7 +80,7 @@ function OrderList({onLogout}){
   async function getProducts(){
     const token = localStorage.getItem("token");
     
-    const response = await fetch("http://localhost:3000/products",{
+    const response = await fetch(`${API_URL}/products`,{
         method:"GET",
         headers:{
             Authorization:`Bearer ${token}`
@@ -170,7 +173,7 @@ function OrderList({onLogout}){
     }));
 
     try{
-    const response = await fetch("http://localhost:3000/orders",{
+    const response = await fetch(`${API_URL}/orders`,{
         method:"POST",
         headers:{"Content-type":"application/json",
                  Authorization:   `Bearer ${token}`,
@@ -210,7 +213,7 @@ function OrderList({onLogout}){
     setError("");
 
     try{
-        const response = await fetch(`http://localhost:3000/orders/${orderId}`,{
+        const response = await fetch(`${API_URL}/orders/${orderId}`,{
             method:"PUT",
             headers:{
                 "Content-type": "application/json",
@@ -253,7 +256,7 @@ function OrderList({onLogout}){
     setError("");
 
     try{
-        const response = await fetch(`http://localhost:3000/orders/${orderId}`,{
+        const response = await fetch(`${API_URL}/orders/${orderId}`,{
             method:"GET",
             headers:{
                 Authorization:`Bearer ${token}`,
