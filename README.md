@@ -1,185 +1,110 @@
 # Inventory Management System
 
+
+
 A full-stack Inventory Management System built with **React, Node.js, Express, and PostgreSQL**.
 
-This application enables authenticated employees to manage products, customers, and orders through a secure REST API with JWT authentication and role-based authorization.
+The application allows authenticated employees to manage products, customers, and orders through a secure REST API with JWT authentication and role-based authorization.
+
+## Live Demo
+
+**Live Application:**  
+[Open Inventory Management System](inventory-management-system-tau-ten.vercel.app)
+
+### Demo Account
+
+Employee Number: `DEMO001`  
+Password: `Demo1234!`
+
+![LogIn](./screenshots/login.png)
+
+![OrderList](./screenshots/orderlist.png)
+
+
+> The demo account has administrator access so reviewers can test product, customer, and order management features.
 
 ---
 
-# Features
+## Features
 
 ### Authentication
-
-* JWT Authentication
-* Protected Routes
-* Role-based Authorization (Admin / Staff)
+- JWT authentication
+- Password hashing with bcrypt
+- Protected frontend routes
+- Role-based authorization
+- Admin / Manager / Staff roles
 
 ### Product Management
-
-* Create Products
-* View Product List
-* Update Product Information
-* Delete Products
-* Inventory Quantity Tracking
+- Create products
+- View inventory
+- Update product information
+- Delete products
+- Track stock quantity
+- Prevent orders that exceed available inventory
 
 ### Customer Management
-
-* Create Customers
-* View Customer List
-* Update Customer Information
-* Delete Customers
+- Create customers
+- View customer records
+- Update customer information
+- Delete customers
 
 ### Order Management
-
-* Create Orders
-* Add Multiple Products to a Single Order
-* Automatic Order Total Calculation
-* Update Order Status
-* View Order Details
-* Inventory Validation Before Ordering
-
----
-
-# Tech Stack
-
-## Frontend
-
-* React
-* React Router
-* CSS
-
-## Backend
-
-* Node.js
-* Express.js
-
-## Database
-
-* PostgreSQL
-
-## Authentication
-
-* JSON Web Token (JWT)
-
-## Tools
-
-* Git
-* GitHub
-* Thunder Client
+- Create multi-product orders
+- Add and remove items before order submission
+- Validate available stock
+- Calculate item totals and estimated order totals
+- Update order status
+- View detailed order information
+- Track the employee responsible for an order
 
 ---
 
-# Project Structure
+## Tech Stack
 
-```text
-inventory-management-system/
+### Frontend
+- React
+- React Router
+- React Hooks
+- Vite
+- CSS
 
-├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── routes/
-│   ├── database/
-│   └── server.js
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   └── App.jsx
-│
-└── README.md
-```
+### Backend
+- Node.js
+- Express.js
+- REST API
+- JWT
+- bcrypt
 
----
+### Database
+- PostgreSQL
+- Neon (Managed PostgreSQL)
 
-# Database Tables
+### Deployment
+- Vercel — Frontend
+- Render — Backend API
+- Neon — PostgreSQL database
 
-* Users
-* Products
-* Customers
-* Orders
-* Order Items
-
----
-
-# REST API
-
-## Authentication
-
-```
-POST /login
-```
-
-## Products
-
-```
-GET    /products
-POST   /products
-PUT    /products/:id
-DELETE /products/:id
-```
-
-## Customers
-
-```
-GET    /customers
-POST   /customers
-PUT    /customers/:id
-DELETE /customers/:id
-```
-
-## Orders
-
-```
-GET    /orders
-GET    /orders/:id
-POST   /orders
-PUT    /orders/:id
-```
+### Development Tools
+- Git
+- GitHub
+- Thunder Client
+- VS Code
 
 ---
 
-# Installation
+## Architecture
 
-## Clone Repository
-
-```bash
-git clone <repository-url>
-```
-
-## Backend
-
-```bash
-cd backend
-npm install
-npm start
-```
-
-## Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
-# Future Improvements
-
-* Deploy backend to AWS EC2
-* Deploy PostgreSQL to AWS RDS
-* ASP.NET Core version
-* Dashboard and Analytics
-* Pagination
-* Search & Filtering
-* Responsive Design Improvements
-
----
-
-# Author
-
-**Taehyeok Kwon**
-
-GitHub:
-https://github.com/tkwon12
+              User
+                │
+                ▼
+      Vercel (React Frontend)
+                │
+        HTTPS / REST API
+                │
+                ▼
+    Render (Express Backend)
+                │
+        PostgreSQL Driver
+                │
+                ▼
+    Neon PostgreSQL Database
